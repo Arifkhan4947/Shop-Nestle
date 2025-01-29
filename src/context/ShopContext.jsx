@@ -1,7 +1,8 @@
 import { createContext, useEffect, useState } from "react";
-import { products } from "../assets/assets";
+import { products } from "../assets/assets"; // removed this frontend part we are going to attach with backend 
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import axios from 'axios' 
 
 
 export const ShopContext = createContext();
@@ -92,12 +93,15 @@ const ShopContextProvider = (props) => {
     }
 
 
+  
+
+
     const value = {
         products, currency, delivery_fee,
         search, setSearch, showSearch, setShowSearch,
         cartItems, addToCart,
         getCartCount, updateQuantity, 
-        getCartAmount, navigate, backendUrl
+        getCartAmount, navigate, backendUrl,
     }
 
     return (

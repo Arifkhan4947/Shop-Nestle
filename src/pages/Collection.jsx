@@ -80,7 +80,7 @@ const Collection = () => {
   // This useEffect is use for display the data once.
   useEffect(() => {
     applyFilter();
-  },[category,subCategory, search, showSearch]);
+  },[category,subCategory, search, showSearch, products]);
 
 
   // This is useEffect is use for display sort-price data once.

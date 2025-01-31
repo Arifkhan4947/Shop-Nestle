@@ -3,6 +3,7 @@ import { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios' 
+import { use } from "react";
 
 
 export const ShopContext = createContext();
@@ -15,11 +16,14 @@ const ShopContextProvider = (props) => {
     const [search, setSearch] = useState('');
     const [showSearch, setShowSearch] = useState(false); 
     const [cartItems, setCartItems] = useState({});
+
     const [products, setProducts] = useState([]);
+    const [token, setToken] = useState('')
+
     const navigate = useNavigate();
 
 
-    const addToCart = async (itemId, size) => {
+    const addToCart = async (itemId,size) => {
 
         if (!size) {
             toast.error('Select Product Size');
@@ -113,6 +117,12 @@ const ShopContextProvider = (props) => {
         useEffect(() => {
             getProductsData()
         },[])
+
+        useEffect(()=> {
+            if (!token && localStorage.getItem('token')) {
+                setToken(localStorage.getItem('token'))
+            }
+        },[]) 
   
 
 
@@ -121,7 +131,8 @@ const ShopContextProvider = (props) => {
         search, setSearch, showSearch, setShowSearch,
         cartItems, addToCart,
         getCartCount, updateQuantity, 
-        getCartAmount, navigate, backendUrl
+        getCartAmount, navigate, backendUrl,
+        setToken,token
     }
 
     return (

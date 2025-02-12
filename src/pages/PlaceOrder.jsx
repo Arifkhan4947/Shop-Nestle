@@ -4,13 +4,14 @@ import CartTotal from '../components/CartTotal'
 import { assets } from '../assets/assets'
 import { ShopContext } from '../context/ShopContext'
 import { toast } from 'react-toastify'
+import axios from 'axios'
 
 const PlaceOrder = () => {
 
-  const [method, setMethod] = useState('cod');
-  const {navigate, backendUrl, token, cartItems, setCartItems, getCartAmount, delivery_fee, products} = useContext(ShopContext);
+  const [method,setMethod] = useState('cod');
+  const {navigate,backendUrl, token, cartItems, setCartItems, getCartAmount, delivery_fee, products} = useContext(ShopContext);
 
-  const [formData, setformData] = useState({
+  const [formData, setFormData] = useState({
     firstName:'',
     lastName:'',
     email:'',
@@ -23,9 +24,9 @@ const PlaceOrder = () => {
   })
 
   const onChangeHandler = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    setformData(data => ({...data,[name]:value}))
+    const name = event.target.name
+    const value = event.target.value
+    setFormData(data => ({...data,[name]:value}))
   }
 
   const onSubmitHandler = async (event) => {
@@ -36,7 +37,7 @@ const PlaceOrder = () => {
         
         for(const items in cartItems) {
             for(const item in cartItems[items]){
-                if (cartItems[items][item] > 0 ) {
+                if (cartItems[items][item] > 0 ) { 
                     const itemInfo = structuredClone(products.find(product => product._id === items))    
                     if (itemInfo) {
                         itemInfo.size = item
@@ -57,8 +58,8 @@ const PlaceOrder = () => {
 
             // API Calls for COD
             case 'cod':
-                const response = await axios.post(backendUrl + '/api/order/place',orderData,{headers:{token}})  
-    
+                const response = await axios.post(backendUrl + '/api/order/place',orderData,{headers:{token}})   
+                console.log(response.data.success);
                 if (response.data.success) {
                     setCartItems({})
                     navigate('/orders')

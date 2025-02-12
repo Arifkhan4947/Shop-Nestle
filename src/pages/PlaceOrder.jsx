@@ -75,8 +75,8 @@ const PlaceOrder = () => {
 
 
     } catch (error) {
-        console.error("Order placement error:", error);
-        toast.error("Something went wrong while placing your order. Please try again later.");
+        console.error("Order placement error:", error)
+        toast.error(error.message)
     }
   }
 
